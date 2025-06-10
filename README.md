@@ -43,7 +43,7 @@ Sesuaikan `TATUM_RPC_URL`, `TATUM_RPC_KEY`, `CHAIN_ID` sesuai kebutuhan aplikasi
 ### Cek Saldo Native Coin
 
 ```php
-use YourVendor\SaranaRpc\SaranaRpc;
+use Sarana\Rpc\SaranaRpc;
 
 $sarana = new SaranaRpc();
 

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 use kornrunner\Ethereum\Transaction;
 use kornrunner\Keccak;
 
-class Saranarpc
+class SaranaRpc
 {
     protected string $rpcUrl;
     protected string $rpcKey;

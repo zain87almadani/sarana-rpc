@@ -10,14 +10,14 @@
     "license": "mit",
     "autoload": {
         "psr-4": {
-            "Sarana\\Blockchainrpc\\": "src/"
+            "Sarana\\Rpc\\": "src/"
         },
         "files": ["src/config/rpcconfig.php"]
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Sarana\\Blockchainrpc\\SaranaRpcServiceProvider"
+                "Sarana\\Rpc\\SaranaRpcServiceProvider"
             ]
         }
     }
