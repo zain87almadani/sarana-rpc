@@ -32,11 +32,14 @@ php artisan vendor:publish --provider="YourVendor\SaranaRpc\SaranaRpcServiceProv
 Kemudian, tambahkan konfigurasi koneksi RPC di file `.env`:
 
 ```
-SARANA_RPC_URL=https://bsc-dataseed.binance.org/
-SARANA_RPC_TIMEOUT=10
+TATUM_RPC_URL=
+TATUM_RPC_KEY=
+CHAIN_ID=
 ```
 
-Sesuaikan `SARANA_RPC_URL` dengan endpoint node RPC yang ingin digunakan (misalnya BSC, Ethereum, dll).
+<!-- API key bisa didapatkan dengan mendaftar di https://tatum.io -->
+
+Sesuaikan `TATUM_RPC_URL`, `TATUM_RPC_KEY`, `CHAIN_ID` sesuai kebutuhan aplikasi Anda.
 
 ## Fitur
 
