@@ -1,6 +1,6 @@
 <?php
 
-namespace Sarana\Blockchainrpc;
+namespace Sarana\Rpc;
 
 use Illuminate\Support\ServiceProvider;
 
