@@ -1,0 +1,23 @@
+{
+    "name": "sarana/rpc",
+    "description": "RPC client for blockchain interaction (Ethereum/BSC)",
+    "type": "library",
+    "require": {
+        "kornrunner/ethereum-address": "^0.3.0",
+        "kornrunner/ethereum-offline-raw-tx": "^0.8.0",
+        "web3p/ethereum-util": "^0.1.4"
+    },
+    "license": "mit",
+    "autoload": {
+        "psr-4": {
+            "Sarana\\Blockchainrpc\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sarana\\Blockchainrpc\\SaranaRpcServiceProvider"
+            ]
+        }
+    }
+}
