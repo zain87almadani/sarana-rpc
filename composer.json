@@ -1,6 +1,6 @@
 {
     "name": "sarana/rpc",
-    "description": "RPC client for blockchain interaction (Ethereum/BSC)",
+    "description": "Laravel package to interact with blockchain RPC nodes (e.g. Ethereum, BSC) using Tatum API",
     "type": "library",
     "require": {
         "kornrunner/ethereum-address": "^0.3.0",
@@ -11,7 +11,8 @@
     "autoload": {
         "psr-4": {
             "Sarana\\Blockchainrpc\\": "src/"
-        }
+        },
+        "files": ["src/config/rpcconfig.php"]
     },
     "extra": {
         "laravel": {

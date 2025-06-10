@@ -4,18 +4,7 @@ Library Laravel untuk interaksi dengan node blockchain (BSC, Ethereum, dll) via 
 
 ## Instalasi
 
-Tambahkan ke `composer.json`:
-
-```json
-"repositories": [
-  {
-    "type": "path",
-    "url": "../saranaRpc"
-  }
-]
-```
-
-Kemudian jalankan perintah berikut untuk menginstall package:
+ jalankan perintah berikut untuk menginstall package:
 
 ```bash
 composer require sarana/rpc
@@ -26,7 +15,7 @@ composer require sarana/rpc
 Setelah instalasi, publish konfigurasi package dengan perintah:
 
 ```bash
-php artisan vendor:publish --provider="YourVendor\SaranaRpc\SaranaRpcServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Sarana\Blockchainrpc\SaranaRpcServiceProvider" --tag="saranarpc-config"
 ```
 
 Kemudian, tambahkan konfigurasi koneksi RPC di file `.env`:
