@@ -79,10 +79,10 @@ class SaranaRpc
         }
     }
 
-    public function sendTransaction(string $sendFrom, string $sendTo, string $privateKey , int $gasLimit = 21000, int $gasPriceGwei = 5)
+    public function sendTransaction(string $sendFrom, string $sendTo, string $amount, string $privateKey , int $gasLimit = 21000, int $gasPriceGwei = 5)
     {
         // Get nonce
-        $nonceResponse = $this->request('eth_getTransactionCount', [$sendFrom, 'latest']);
+        $nonceResponse = $this->request('eth_getTransactionCount', [$sendFrom, 'pending']);
         $nonceHex = $nonceResponse['result'] ?? '0x0';
         $nonce = hexdec($nonceHex);
 
@@ -90,7 +90,7 @@ class SaranaRpc
         $gasPrice = bcmul((string)$gasPriceGwei, bcpow('10', '9')); // 5 Gwei in wei
 
         // Value to send: 0.00001 ETH in wei
-        $valueEth = '0.00001';
+        $valueEth = $amount;
         $value = bcmul($valueEth, bcpow('10', '18'));
 
         // Create transaction array
@@ -124,10 +124,10 @@ class SaranaRpc
         }
     }
 
-    public function sendTokenTransaction(string $sendFrom, string $sendTo, string $privateKey, string $smartcontract, string $amount, int $gasLimit = 21000, int $gasPriceGwei = 5)
+    public function sendTokenTransaction(string $sendFrom, string $sendTo,string $amount, string $privateKey, string $smartcontract, int $gasLimit = 21000, int $gasPriceGwei = 5)
     {
         // Get nonce
-        $nonceResponse = $this->request('eth_getTransactionCount', [$sendFrom, 'latest']);
+        $nonceResponse = $this->request('eth_getTransactionCount', [$sendFrom, 'pending']);
         $nonceHex = $nonceResponse['result'] ?? '0x0';
         $nonce = hexdec($nonceHex);
     
