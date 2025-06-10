@@ -15,9 +15,9 @@ class SaranaRpc
 
     public function __construct()
     {
-        $this->rpcUrl = config('saranarpc.rpc_url');
-        $this->rpcKey = config('saranarpc.rpc_key');
-        $this->chainId = config('saranarpc.chain_id');
+        $this->rpcUrl = config('rpcconfig.rpc_url');
+        $this->rpcKey = config('rpcconfig.rpc_key');
+        $this->chainId = config('rpcconfig.chain_id');
     }
 
     protected function request(string $method, array $params = [])
@@ -40,9 +40,10 @@ class SaranaRpc
         $result = $this->request('eth_getBalance', [$address, 'latest']);
         
         if (isset($result['result'])) {
+            $balance = hexdec($result['result']) / pow(10, 18);
             return [
                 'message' => 'success',
-                'data' => $result['result'],
+                'data' => $balance,
             ];
         } else {
             $errorMessage = $result['error']['message'] ?? $result;
@@ -63,9 +64,11 @@ class SaranaRpc
         ], 'latest']);
 
         if (isset($result['result'])) {
+            // Convert hex to decimal and then to ETH (divide by 1e18)
+            $balance = hexdec($result['result']) / pow(10, 18);
             return [
                 'message' => 'success',
-                'data' => $result['result'],
+                'data' => $balance,
             ];
         } else {
             $errorMessage = $result['error']['message'] ?? $result;

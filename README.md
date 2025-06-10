@@ -71,10 +71,28 @@ $from = '0xYourWalletAddress';
 $privateKey = 'your-private-key';
 $to = '0xRecipientAddress';
 $value = '1000000000000000000'; // 1 ETH atau BNB dalam wei
+$gasLimit = "default (2100)";
+$gasPriceGwei = "default (5)";
 
-$txHash = $sarana->sendTransaction($from, $privateKey, $to, $value);
+$txHash = $sarana->sendTransaction($sendFrom,$sendTo,$privateKey,$amount,$gasLimit,$gasPriceGwei);
 
 echo "Transaksi dikirim dengan hash: " . $txHash;
+```
+
+### Kirim Token ERC20/BEP20
+
+```php
+$smartcontract = '0xYourWalletAddress';
+$from = '0xYourWalletAddress';
+$privateKey = 'your-private-key';
+$to = '0xRecipientAddress';
+$amount = '10'; // jumlah token dalam satuan normal (misalnya 10 token)
+$gasLimit = "default (2100)";
+$gasPriceGwei = "default (5)";
+
+$txHash = $sarana->sendTokenTransaction($sendFrom,$sendTo,$privateKey,$smartcontract,$amount,$gasLimit,$gasPriceGwei);
+
+echo "Token berhasil dikirim dengan hash: " . $txHash;
 ```
 
 ## Format Respon
@@ -87,6 +105,9 @@ echo "Transaksi dikirim dengan hash: " . $txHash;
 
 - `sendTransaction($from, $privateKey, $to, $value)`  
   Mengembalikan hash transaksi (`string`) jika berhasil mengirim transaksi, atau `null` jika gagal.
+
+- `sendTokenTransaction($from, $privateKey, $to, $amount)`  
+  Mengembalikan hash transaksi token sebagai `string` jika berhasil, atau pesan kesalahan jika gagal.
 
 ---
 
