@@ -15,10 +15,10 @@ Tambahkan ke `composer.json`:
 ]
 ```
 
-Kemudian jalankan perintah berikut untuk menginstall package secara lokal:
+Kemudian jalankan perintah berikut untuk menginstall package:
 
 ```bash
-composer require your-vendor/sarana-rpc:@dev
+composer require sarana/rpc
 ```
 
 ## Konfigurasi
