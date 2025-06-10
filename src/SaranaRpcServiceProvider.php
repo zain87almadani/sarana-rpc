@@ -8,15 +8,14 @@ class SaranaRpcServiceProvider extends ServiceProvider
 {
     public function register()
     {
-       
-        $this->app->singleton(RpcClient::class, function () {
-            return new RpcClient();
+        $this->app->singleton(SaranaRpc::class, function () {
+            return new SaranaRpc();
         });
     }
 
     public function boot()
     {
-        $dist = __DIR__.'/../config/rpcconfig.php';
+        $dist = __DIR__.'/config/rpcconfig.php';
         if (function_exists('config_path')) {
             // Publishes config File.
             $this->publishes([
