@@ -1,4 +1,5 @@
 /vendor
+/sandbox
 /node_modules
 /.idea
 /.vscode
