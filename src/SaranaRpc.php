@@ -129,7 +129,7 @@ class SaranaRpc
     public function cekBalance(string $address)
     {
         $result = $this->request('eth_getBalance', [$address, 'latest']);
-        
+
         if (isset($result['result'])) {
             $balance = hexdec($result['result']) / pow(10, 18);
             return [
@@ -218,7 +218,7 @@ class SaranaRpc
              $this->chainId
         );
         $signedTx = '0x' . $tx->getRaw($privateKey,  $this->chainId);
-        
+
         $result = $this->request('eth_sendRawTransaction', [$signedTx]);
 
         if (isset($result['result'])) {
@@ -260,7 +260,7 @@ class SaranaRpc
         $nonceResponse = $this->request('eth_getTransactionCount', [$sendFrom, 'pending']);
         $nonceHex = $nonceResponse['result'] ?? '0x0';
         $nonce = hexdec($nonceHex);
-    
+
         $gasPrice = bcmul((string)$gasPriceGwei, bcpow('10', '9')); // 5 Gwei in wei
 
         // Encode transfer function call data
@@ -406,6 +406,18 @@ class SaranaRpc
 
         return $hex;
     }
+
+    public function hexToDecimal($hex)
+    {
+        $dec = '0';
+        $len = strlen($hex);
+        for ($i = 0; $i < $len; $i++) {
+            $current = hexdec($hex[$i]);
+            $dec = bcmul($dec, '16');
+            $dec = bcadd($dec, (string)$current);
+        }
+        return $dec;
+    }
     /**
      * Estimate gas for a transaction.
      *
@@ -488,17 +500,23 @@ class SaranaRpc
         $transaction_type = 'coin';
         $token_amount = null;
         $smartcontract = null;
+        $recipient = null;
         // If 'to' is a contract address, and input starts with ERC20 transfer methodId
         if (!empty($input) && strlen($input) >= 10 && isset($to)) {
             // ERC20 transfer methodId: 0xa9059cbb
             if (strpos($input, '0xa9059cbb') === 0 && strlen($input) >= (10 + 64 + 64)) {
                 $transaction_type = 'token';
                 // Parse token amount from input (last 64 hex chars after methodId and address)
-                $amountHex = substr($input, 74, 64);
                 // Remove leading zeros
+                $amountHex = substr($input, 74, 64);
                 $amountHex = ltrim($amountHex, '0');
-                $token_amount = $amountHex !== '' ? (string)hexdec($amountHex) : '0';
+                $rawAmountHex = $amountHex !== '' ? $amountHex : '0';
+                $rawAmount = $this->hexToDecimal($rawAmountHex);
+                $token_amount = bcdiv($rawAmount, bcpow('10', '18'), 18);
                 $smartcontract = $to;
+                // Parse recipient address from input data
+                $recipientHex = substr($input, 10, 64);
+                $recipient = '0x' . substr($recipientHex, 24);
             }
         }
         // ETH value in decimal
@@ -515,7 +533,7 @@ class SaranaRpc
             'data' => [
                 'hash' => $hash,
                 'from' => $from,
-                'to' => $to,
+                'to' => $transaction_type === 'token' ? $recipient : $to,
                 'amount' => $amount,
                 'confirmation' => $confirmation,
                 'transaction_type' => $transaction_type,
@@ -613,4 +631,3 @@ class SaranaRpc
 
 
 }
-   
